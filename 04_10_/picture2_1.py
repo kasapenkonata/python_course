@@ -1,24 +1,6 @@
 import pygame
 from math import pi, cos, sin
 
-
-def sun_(dx, dy, num_points, radius):
-    point_list = []
-
-    for i in range(num_points * 2):
-        radius_ = radius
-        if i % 2 == 0:
-            radius_ = radius - 5
-
-        ang = i * pi / num_points
-        x = dx + int(cos(ang) * radius_)
-        y = dy + int(sin(ang) * radius_)
-
-        point_list.append((x, y))
-
-    return point_list
-
-
 pygame.init()
 
 # Цвета, которые мы будем использовать в формате RGB
@@ -61,51 +43,87 @@ while not done:
     # Очистить экран и установить фон экрана
     screen.fill(White)
 
+
     # Фон картинки
-    pygame.draw.rect(screen, Blue, [0, 0, 500, 255])
-    pygame.draw.rect(screen, Green, [0, 255, 500, 255])
+    def draw_background(sky_color, grass_color):
+        pygame.draw.rect(screen, sky_color, [0, 0, 500, 255])
+        pygame.draw.rect(screen, grass_color, [0, 255, 500, 255])
 
     # Дом
-    pygame.draw.rect(screen, Black, [69, 169, 152, 152], 1)
-    pygame.draw.rect(screen, Brown, [70, 170, 150, 150])
+    def draw_house(contour_color, house_color):
+        pygame.draw.rect(screen, contour_color, [69, 169, 152, 152], 1)
+        pygame.draw.rect(screen, house_color, [70, 170, 150, 150])
 
     # Окно
-    pygame.draw.rect(screen, BlueWindow, [113, 205, 65, 65])
+    def draw_window(window_color):
+        pygame.draw.rect(screen, window_color, [113, 205, 65, 65])
 
     # Крыша
-    pygame.draw.polygon(screen, Black, [[145, 90], [70, 169], [220, 169]])
-    pygame.draw.polygon(screen, Red, [[145, 92], [72, 168], [218, 168]])
+    def draw_roof(contour_color, roof_color):
+        pygame.draw.polygon(screen, contour_color, [[145, 90], [70, 169], [220, 169]])
+        pygame.draw.polygon(screen, roof_color, [[145, 92], [72, 168], [218, 168]])
 
     # Тучки
-    for i in range(200, 291, 30):
-        pygame.draw.circle(screen, Black, [i, 60], 25)
-        pygame.draw.circle(screen, White, [i, 60], 24)
+    def draw_clouds(contour_color, clouds_color):
+        for i in range(200, 291, 30):
+            pygame.draw.circle(screen, contour_color, [i, 60], 25)
+            pygame.draw.circle(screen, clouds_color, [i, 60], 24)
 
-    for i in range(230, 261, 30):
-        pygame.draw.circle(screen, Black, [i, 40], 25)
-        pygame.draw.circle(screen, White, [i, 40], 24)
+        for i in range(230, 261, 30):
+            pygame.draw.circle(screen, contour_color, [i, 40], 25)
+            pygame.draw.circle(screen, clouds_color, [i, 40], 24)
 
     # Ствол дерева
-    pygame.draw.rect(screen, Black, [350, 230, 20, 100])
+    def draw_trunk(trunk_color):
+        pygame.draw.rect(screen, trunk_color, [350, 230, 20, 100])
 
     # Листья
-    pygame.draw.circle(screen, Black, [360, 170], 22)
-    pygame.draw.circle(screen, GreenTrees, [360, 170], 21)
-    pygame.draw.circle(screen, Black, [340, 190], 22)
-    pygame.draw.circle(screen, GreenTrees, [340, 190], 21)
-    pygame.draw.circle(screen, Black, [380, 190], 22)
-    pygame.draw.circle(screen, GreenTrees, [380, 190], 21)
-    pygame.draw.circle(screen, Black, [360, 210], 22)
-    pygame.draw.circle(screen, GreenTrees, [360, 210], 21)
+    def draw_leaves(contour_color, leaves_color):
+        pygame.draw.circle(screen, contour_color, [360, 170], 22)
+        pygame.draw.circle(screen, leaves_color, [360, 170], 21)
+        pygame.draw.circle(screen, contour_color, [340, 190], 22)
+        pygame.draw.circle(screen, leaves_color, [340, 190], 21)
+        pygame.draw.circle(screen, contour_color, [380, 190], 22)
+        pygame.draw.circle(screen, leaves_color, [380, 190], 21)
+        pygame.draw.circle(screen, contour_color, [360, 210], 22)
+        pygame.draw.circle(screen, leaves_color, [360, 210], 21)
 
-    pygame.draw.circle(screen, Black, [340, 230], 22)
-    pygame.draw.circle(screen, GreenTrees, [340, 230], 21)
-    pygame.draw.circle(screen, Black, [380, 230], 22)
-    pygame.draw.circle(screen, GreenTrees, [380, 230], 21)
+        pygame.draw.circle(screen, contour_color, [340, 230], 22)
+        pygame.draw.circle(screen, leaves_color, [340, 230], 21)
+        pygame.draw.circle(screen, contour_color, [380, 230], 22)
+        pygame.draw.circle(screen, leaves_color, [380, 230], 21)
+
+    # Вспомогательная фуекцимя для рисования солнца
+    def sun_(dx, dy, num_points, radius):
+        point_list = []
+
+        for i in range(num_points * 2):
+            radius_ = radius
+            if i % 2 == 0:
+                radius_ = radius - 5
+
+            ang = i * pi / num_points
+            x = dx + int(cos(ang) * radius_)
+            y = dy + int(sin(ang) * radius_)
+
+            point_list.append((x, y))
+
+        return point_list
 
     # Солнце
-    pygame.draw.polygon(screen, Black, sun_(420, 80, 24, 41))
-    pygame.draw.polygon(screen, Pink, sun_(420, 80, 24, 40))
+    def draw_sun(contour_color, sun_color):
+        pygame.draw.polygon(screen, contour_color, sun_(420, 80, 24, 41))
+        pygame.draw.polygon(screen, sun_color, sun_(420, 80, 24, 40))
+
+
+    draw_background(Blue, Green)
+    draw_house(Black, Brown)
+    draw_window(BlueWindow)
+    draw_roof(Black, Red)
+    draw_clouds(Black, White)
+    draw_trunk(Black)
+    draw_leaves(Black, GreenTrees)
+    draw_sun(Black, Pink)
 
     pygame.display.flip()
 
