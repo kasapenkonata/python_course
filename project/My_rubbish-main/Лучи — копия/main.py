@@ -8,7 +8,6 @@ wall_thicknes = 2
 boundarySpacing = 0
 # ------------------------------
 
-
 # Настройки
 pygame.init()
 size = (700, 500)
@@ -131,7 +130,6 @@ while not finished:
                 drawing = False
  
     # --- ИГРОВАЯ ЛОГИКА ---
-    initial_wall = Wall((100, 100), (150, 30))
     # Рассчитать новые лучи из источника
     if play:
         rays1 = []
@@ -139,7 +137,7 @@ while not finished:
         for i in range(0, number_of_rays):
             # Создать новый луч
             # все созданные лучи помещаем в массив rays2
-            ray = Ray(pygame.mouse.get_pos(), i * 360/number_of_rays, initial_wall)
+            ray = Ray(pygame.mouse.get_pos(), i * 360/number_of_rays)
             closest = 10000000000000000000000
             rays2.append(ray)
             counter = 1
