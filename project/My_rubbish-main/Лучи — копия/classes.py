@@ -37,7 +37,8 @@ class Wall():
             t = ((x1 - x3) * (y3 - y4) - (y1 - y3) * (x3 - x4)) / div
             s = -((x1 - x2) * (y1 - y3) - (y1 - y2) * (x1 - x3)) / div
             # Проверить, есть ли точка пересечения
-            if 0.000 <= t and s >= 0.000 and s <= 1.000:
+            if 0.000 < t and s > 0.000 and s <= 1.000:
+                # возвращаем точку пересечения со стенкой
                 self.point = (int(x1 + t * (x2 - x1)), int(y1 + t * (y2 - y1)))
                 return(self.point)
             else:
@@ -47,12 +48,11 @@ class Wall():
 
 
 class Ray():
-    def __init__(self, start_pos, angle, wall_intersecting):
+    def __init__(self, start_pos, angle):
         self.brightness = 1
         self.start_pos = start_pos
         self.angle = angle
         self.end_point = self.getHelperPoint()
-        self.wall = wall_intersecting
     
     def getHelperPoint(self):
         # Требуется для расчета пересечений
